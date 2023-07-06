@@ -1,14 +1,16 @@
 {
   "name": "kaiser-directory-tree",
   "displayName": "Kaiser's Directory Tree",
-  "description": "Kaiser's Directory Tree is a Visual Studio Code extension that allows you to copy a directory tree to the clipboard or save it to a file in the root of the directory. The directory tree can be copied or saved in either a text format or a JSON format.",
-  "version": "0.0.1",
+  "description": "Kaiser's Directory Tree is a Visual Studio Code extension that allows you to copy or save a directory tree or the entire project tree to the clipboard or a file. The tree can be in either a text or JSON format. The extension also considers an ignore file to exclude specific directories or files.",
+  "version": "0.1.0",
   "publisher": "DavidKaiser",
   "author": {
-    "name": "David Cory Kaiser"},
+    "name": "David Cory Kaiser"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jackel27/kaiser-dir-tree-vscode-ext.git"},
+    "url": "https://github.com/jackel27/kaiser-dir-tree-vscode-ext.git"
+  },
   "engines": {
     "vscode": "^1.79.0"
   },
@@ -20,8 +22,17 @@
     "color": "#C80000",
     "theme": "dark"
   },
-  "activationEvents": [],
   "main": "./extension.js",
+  "activationEvents": [
+    "onCommand:kaiser-directory-tree.copyDirTreeAsText",
+    "onCommand:kaiser-directory-tree.saveDirTreeAsText",
+    "onCommand:kaiser-directory-tree.copyDirTreeAsJson",
+    "onCommand:kaiser-directory-tree.saveDirTreeAsJson",
+    "onCommand:kaiser-directory-tree.copyProjectTreeAsText",
+    "onCommand:kaiser-directory-tree.saveProjectTreeAsText",
+    "onCommand:kaiser-directory-tree.copyProjectTreeAsJson",
+    "onCommand:kaiser-directory-tree.saveProjectTreeAsJson"
+  ],
   "contributes": {
     "commands": [
       {
@@ -29,38 +40,92 @@
         "title": "Copy Directory Tree as Text"
       },
       {
-        "command": "kaiser-directory-tree.copyDirTreeAsJson",
-        "title": "Copy Directory Tree as JSON"
-      },
-      {
         "command": "kaiser-directory-tree.saveDirTreeAsText",
         "title": "Save Directory Tree as Text"
       },
       {
+        "command": "kaiser-directory-tree.copyDirTreeAsJson",
+        "title": "Copy Directory Tree as JSON"
+      },
+      {
         "command": "kaiser-directory-tree.saveDirTreeAsJson",
         "title": "Save Directory Tree as JSON"
+      },
+      {
+        "command": "kaiser-directory-tree.copyProjectTreeAsText",
+        "title": "Copy Project Tree as Text"
+      },
+      {
+        "command": "kaiser-directory-tree.saveProjectTreeAsText",
+        "title": "Save Project Tree as Text"
+      },
+      {
+        "command": "kaiser-directory-tree.copyProjectTreeAsJson",
+        "title": "Copy Project Tree as JSON"
+      },
+      {
+        "command": "kaiser-directory-tree.saveProjectTreeAsJson",
+        "title": "Save Project Tree as JSON"
       }
     ],
     "menus": {
       "explorer/context": [
         {
-          "command": "kaiser-directory-tree.copyDirTreeAsText",
-          "when": "explorerResourceIsFolder"
+          "submenu": "kaiser-directory-tree.folderTree",
+          "group": "7_modification@1"
         },
         {
-          "command": "kaiser-directory-tree.copyDirTreeAsJson",
-          "when": "explorerResourceIsFolder"
+          "submenu": "kaiser-directory-tree.projectTree",
+          "group": "7_modification@2"
+        }
+      ],
+      "kaiser-directory-tree.folderTree": [
+        {
+          "command": "kaiser-directory-tree.copyDirTreeAsText",
+          "group": "1_text@1"
         },
         {
           "command": "kaiser-directory-tree.saveDirTreeAsText",
-          "when": "explorerResourceIsFolder"
+          "group": "1_text@2"
+        },
+        {
+          "command": "kaiser-directory-tree.copyDirTreeAsJson",
+          "group": "2_json@1"
         },
         {
           "command": "kaiser-directory-tree.saveDirTreeAsJson",
-          "when": "explorerResourceIsFolder"
+          "group": "2_json@2"
+        }
+      ],
+      "kaiser-directory-tree.projectTree": [
+        {
+          "command": "kaiser-directory-tree.copyProjectTreeAsText",
+          "group": "1_text@1"
+        },
+        {
+          "command": "kaiser-directory-tree.saveProjectTreeAsText",
+          "group": "1_text@2"
+        },
+        {
+          "command": "kaiser-directory-tree.copyProjectTreeAsJson",
+          "group": "2_json@1"
+        },
+        {
+          "command": "kaiser-directory-tree.saveProjectTreeAsJson",
+          "group": "2_json@2"
         }
       ]
-    }
+    },
+    "submenus": [
+      {
+        "id": "kaiser-directory-tree.folderTree",
+        "label": "Folder Tree"
+      },
+      {
+        "id": "kaiser-directory-tree.projectTree",
+        "label": "Project Tree"
+      }
+    ]
   },
   "scripts": {
     "lint": "eslint .",
@@ -79,7 +144,8 @@
     "typescript": "^5.1.3"
   },
   "dependencies": {
-    "copy-paste": "^1.5.3"
+    "copy-paste": "^1.5.3",
+    "ignore": "^5.2.4"
   },
   "homepage": "https://github.com/jackel27/kaiser-dir-tree-vscode-ext"
 }
