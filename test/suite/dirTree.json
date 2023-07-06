@@ -1,0 +1,14 @@
+{
+  "name": "suite",
+  "type": "folder",
+  "children": [
+    {
+      "name": "extension.test.js",
+      "type": "file"
+    },
+    {
+      "name": "index.js",
+      "type": "file"
+    }
+  ]
+}
