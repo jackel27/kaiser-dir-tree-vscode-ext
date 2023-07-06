@@ -4,28 +4,16 @@ const path = require('path');
 const copyPaste = require('copy-paste');
 const ignore = require('ignore').default;
 
-/*
-    By: David Kaiser
-    Date: 2023-07-06
-    Email: davidcorykaiser@gmail.com
-    Github: https://github.com/jackel27/kaiser-dir-tree-vscode-ext
-    Description: This extension allows you to copy the directory tree of a folder in your workspace or the entire workspace to the clipboard as text or JSON.
-
-/**
- * @param {vscode.ExtensionContext} context
- */
 function activate(context) {
 
     console.log('Congratulations, your extension "kaiser-directory-tree" is now active!');
 
-    let disposable = vscode.commands.registerCommand('kaiser-directory-tree.helloWorld', function () {
-        vscode.window.showInformationMessage('Hello World from Kaiser&#39;s Directory Tree!');
-    });
-
-    context.subscriptions.push(disposable);
-
     // Register the "Copy Directory Tree as Text" command
     let copyTextDisposable = vscode.commands.registerCommand('kaiser-directory-tree.copyDirTreeAsText', function (uri) {
+        if (!uri) {
+            vscode.window.showErrorMessage('Please right-click on a folder to use this command.');
+            return;
+        }
         let dirTree = getDirTreeAsTextIgnore(uri.fsPath);
         copyPaste.copy(dirTree);
         vscode.window.showInformationMessage('Directory tree copied to clipboard as text');
@@ -35,6 +23,10 @@ function activate(context) {
 
     // Register the "Copy Directory Tree as JSON" command
     let copyJsonDisposable = vscode.commands.registerCommand('kaiser-directory-tree.copyDirTreeAsJson', function (uri) {
+        if (!uri) {
+            vscode.window.showErrorMessage('Please right-click on a folder to use this command.');
+            return;
+        }
         let dirTree = getDirTreeAsJsonIgnore(uri.fsPath);
         copyPaste.copy(JSON.stringify(dirTree, null, 2));
         vscode.window.showInformationMessage('Directory tree copied to clipboard as JSON');
@@ -44,6 +36,10 @@ function activate(context) {
 
     // Register the "Save Directory Tree as Text" command
     let saveTextDisposable = vscode.commands.registerCommand('kaiser-directory-tree.saveDirTreeAsText', function (uri) {
+        if (!uri) {
+            vscode.window.showErrorMessage('Please right-click on a folder to use this command.');
+            return;
+        }
         let dirTree = getDirTreeAsTextIgnore(uri.fsPath);
         fs.writeFileSync(path.join(uri.fsPath, 'dirTree.txt'), dirTree);
         vscode.window.showInformationMessage('Directory tree saved to dirTree.txt as text');
@@ -53,6 +49,10 @@ function activate(context) {
 
     // Register the "Save Directory Tree as JSON" command
     let saveJsonDisposable = vscode.commands.registerCommand('kaiser-directory-tree.saveDirTreeAsJson', function (uri) {
+        if (!uri) {
+            vscode.window.showErrorMessage('Please right-click on a folder to use this command.');
+            return;
+        }
         let dirTree = getDirTreeAsJsonIgnore(uri.fsPath);
         fs.writeFileSync(path.join(uri.fsPath, 'dirTree.json'), JSON.stringify(dirTree, null, 2));
         vscode.window.showInformationMessage('Directory tree saved to dirTree.json as JSON');
@@ -74,7 +74,7 @@ function activate(context) {
         let dirTree = getDirTreeAsJsonIgnore(vscode.workspace.rootPath);
         copyPaste.copy(JSON.stringify(dirTree, null, 2));
         vscode.window.showInformationMessage('Project tree copied to clipboard as JSON');
-   });
+    });
 
     context.subscriptions.push(copyProjectJsonDisposable);
 
@@ -107,6 +107,7 @@ function getIgnoreList(dirPath) {
     }
     return ignore();
 }
+
 function getDirTreeAsTextIgnore(dirPath, prefix = '', ig = getIgnoreList(dirPath)) {
     let dirTree = prefix + path.basename(dirPath) + '\n';
     let files = fs.readdirSync(dirPath);

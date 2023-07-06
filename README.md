@@ -46,10 +46,17 @@ No specific settings are currently provided by the extension.
 
 ## Known Issues
 
-At this point, there are no known issues. If you find any, please feel free to create issues on my repo so I can look into them. 
+Experienced an issue where it wouldn't work. How I got it to work was navigating to my VS Code Extensions folder, opening the extension folder name (kaiser-directory-tree-*), and then running `npm install` in the terminal. After that, I restarted VS Code and it worked.
+
+Here are the locations of the VS Code Extensions folder:
+```bash
+Windows %USERPROFILE%\.vscode\extensions
+macOS ~/.vscode/extensions
+Linux ~/.vscode/extensions
+```
 
 ## Release Notes
 
-### 0.1.0
+### 1.0.0
 
-Initial release with basic functionalities.
+Release. Should be stable. Please report any issues.

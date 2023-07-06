@@ -2,7 +2,7 @@
   "name": "kaiser-directory-tree",
   "displayName": "Kaiser's Directory Tree",
   "description": "Kaiser's Directory Tree is a Visual Studio Code extension that allows you to copy or save a directory tree or the entire project tree to the clipboard or a file. The tree can be in either a text or JSON format. The extension also considers an ignore file to exclude specific directories or files.",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "publisher": "DavidKaiser",
   "author": {
     "name": "David Cory Kaiser"
@@ -24,14 +24,6 @@
   },
   "main": "./extension.js",
   "activationEvents": [
-    "onCommand:kaiser-directory-tree.copyDirTreeAsText",
-    "onCommand:kaiser-directory-tree.saveDirTreeAsText",
-    "onCommand:kaiser-directory-tree.copyDirTreeAsJson",
-    "onCommand:kaiser-directory-tree.saveDirTreeAsJson",
-    "onCommand:kaiser-directory-tree.copyProjectTreeAsText",
-    "onCommand:kaiser-directory-tree.saveProjectTreeAsText",
-    "onCommand:kaiser-directory-tree.copyProjectTreeAsJson",
-    "onCommand:kaiser-directory-tree.saveProjectTreeAsJson"
   ],
   "contributes": {
     "commands": [
